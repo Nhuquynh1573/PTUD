@@ -130,7 +130,7 @@ article p {
                 }else{
                     echo "<li><a href='?khachhang'>Quản Lý Khách Hàng</a></li>";
                 }
-                echo "<li><a href='?dondatsan'>Quản Lý Đơn Đặt Sân</a></li>";
+                echo "<li><a href='?dondat'>Quản Lý Đơn Đặt Sân</a></li>";
             ?>
             </ul>
         </nav>
@@ -167,6 +167,8 @@ article p {
                 include_once("View/QLCoSo/updateCoSo.php");
             }elseif(isset($_REQUEST["khachhang"])){
                 include_once("View/QLKhachHang/quanlykhachhang.php");         
+            }elseif (isset($_REQUEST["action"]) && $_REQUEST["action"] === "updateKhachHang"){
+                include_once("View/QLKhachHang/updateKhachHang.php");
             }
             ?>
         </article>

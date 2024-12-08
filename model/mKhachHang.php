@@ -5,23 +5,72 @@
                   $p = new mKetNoi();
                   $con=$p->moKetNoi();
                   if($con){
-                      $truyvan = "SELECT kh.*
-                                    FROM khachhang kh
-                                    JOIN dondatsan dd ON kh.MaKhachHang = dd.MaKhachHang
-                                    JOIN chitietdondatsan ct ON dd.MaDonDatSan = ct.MaDonDatSan
-                                    JOIN sanbong sb ON ct.MaSanBong = sb.MaSanBong
-                                    JOIN coso cs ON sb.MaCoSo = cs.MaCoSo
-                                    JOIN chusan ch ON cs.MaChuSan = ch.MaChuSan
-                                    WHERE ch.MaChuSan = '$machusan';
+                      $truyvan = "SELECT DISTINCT 
+                                    kh.MaKhachHang,
+                                    kh.TenKhachHang,
+                                    kh.Email,
+                                    kh.SDT,
+                                    kh.DiaChi,
+                                    kh.GioiTinh
+                                FROM 
+                                    chusan cs
+                                JOIN 
+                                    coso csos ON cs.MaChuSan = csos.MaChuSan
+                                JOIN 
+                                    sanbong sb ON csos.MaCoSo = sb.MaCoSo
+                                JOIN 
+                                    dondatsan1 dds ON sb.MaSanBong = dds.MaSanBong
+                                JOIN 
+                                    khachhang kh ON dds.MaKhachHang = kh.MaKhachHang
+                                WHERE 
+                                    cs.MaChuSan = $machusan;
+                                ;
 
                               ";
+
                       $kq = mysqli_query($con, $truyvan);
+                      
                       $p->dongKetNoi($con);
                       return $kq;
                   }else{
                       return false;
                   }
+            }
+
+            public function SelectKhachHangByMaKhachHang($maKH){
+                $p = new mKetNoi();
+                $con=$p->moKetNoi();
+                if($con){
+                    $truyvan = "SELECT * FROM `khachhang` WHERE MaKhachHang = $maKH";
+
+                    $kq = mysqli_query($con, $truyvan);
+                    
+                    $p->dongKetNoi($con);
+                    return $kq;
+                }else{
+                    return false;
+                }
+          }
+
+            public function updateKhachHang($maKH, $TenKH, $email, $sdt, $matKhau, $diaChi, $gioitinh){
+                $p = new mKetNoi();
+                $con = $p->moKetNoi();  
+                // Truy vấn cập nhật thông tin nhân viên
+                $truyvan = "UPDATE `khachhang` SET 
+                            `TenKhachHang`= N'$TenKH',
+                            `Email`='$email',
+                            `SDT`='$sdt',
+                            `MatKhau`='$matKhau',
+                            `DiaChi`='$diaChi',
+                            `GioiTinh`='$gioitinh' 
+                            WHERE `MaKhachHang` = $maKH";
+                $kq = mysqli_query($con, $truyvan);
+                $p->dongKetNoi($con);
+                return $kq;
               }
+
+
+
       }
 
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 06, 2024 lúc 03:23 PM
+-- Thời gian đã tạo: Th12 08, 2024 lúc 10:12 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `chitietdondatsan` (
   `MaChiTietDonDatSan` int(11) NOT NULL,
+  `NgayNhanSan` date NOT NULL,
   `ThoiGianBatDau` time DEFAULT NULL,
   `ThoiGianKetThuc` time DEFAULT NULL,
   `MaDonDatSan` int(11) DEFAULT NULL,
@@ -41,12 +42,12 @@ CREATE TABLE `chitietdondatsan` (
 -- Đang đổ dữ liệu cho bảng `chitietdondatsan`
 --
 
-INSERT INTO `chitietdondatsan` (`MaChiTietDonDatSan`, `ThoiGianBatDau`, `ThoiGianKetThuc`, `MaDonDatSan`, `MaSanBong`, `DonGia`, `ThoiLuong`) VALUES
-(1, '06:00:00', '08:00:00', 1, 1, 100000, 2),
-(2, '08:00:00', '10:00:00', 1, 1, 100000, 2),
-(3, '07:00:00', '09:00:00', 2, 2, 150000, 2),
-(4, '09:00:00', '11:00:00', 2, 2, 150000, 2),
-(5, '08:00:00', '10:00:00', 3, 3, 200000, 2);
+INSERT INTO `chitietdondatsan` (`MaChiTietDonDatSan`, `NgayNhanSan`, `ThoiGianBatDau`, `ThoiGianKetThuc`, `MaDonDatSan`, `MaSanBong`, `DonGia`, `ThoiLuong`) VALUES
+(1, '2024-12-24', '06:00:00', '08:00:00', 1, 1, 100000, 2),
+(2, '2024-12-18', '08:00:00', '10:00:00', 1, 1, 100000, 2),
+(3, '2024-12-23', '07:00:00', '09:00:00', 2, 2, 150000, 2),
+(4, '2024-12-23', '09:00:00', '11:00:00', 2, 2, 150000, 2),
+(5, '2024-12-29', '08:00:00', '10:00:00', 3, 3, 200000, 2);
 
 -- --------------------------------------------------------
 
@@ -108,33 +109,6 @@ INSERT INTO `coso` (`MaCoSo`, `TenCoSo`, `DiaChi`, `MoTa`, `MaChuSan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `dondatsan`
---
-
-CREATE TABLE `dondatsan` (
-  `MaDonDatSan` int(11) NOT NULL,
-  `TrangThai` varchar(255) DEFAULT NULL,
-  `MaKhachHang` int(11) DEFAULT NULL,
-  `MaNhanVien` int(11) DEFAULT NULL,
-  `ThoiGian` date DEFAULT NULL,
-  `TongTien` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `dondatsan`
---
-
-INSERT INTO `dondatsan` (`MaDonDatSan`, `TrangThai`, `MaKhachHang`, `MaNhanVien`, `ThoiGian`, `TongTien`) VALUES
-(1, 'Đã đặt sân', 1, 1, '2024-10-28', 200000),
-(2, 'Đã đặt sân', 2, 2, '2024-10-29', 300000),
-(3, 'Đã hủy sân', 3, 3, '2024-10-30', 0),
-(4, 'Chờ xác nhận', 1, NULL, '2024-12-07', 200000),
-(5, 'Chờ xác nhận', 1, NULL, '2024-12-07', 120000),
-(6, 'Chờ xác nhận', 1, NULL, '2024-12-07', 100000);
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `dondatsan1`
 --
 
@@ -155,7 +129,9 @@ CREATE TABLE `dondatsan1` (
 --
 
 INSERT INTO `dondatsan1` (`MaDonDatSan`, `MaKhachHang`, `TenKhachHang`, `MaSanBong`, `NgayDat`, `GioBatDau`, `GioKetThuc`, `TongTien`, `TrangThai`) VALUES
-(39, 9, 'KH Thật ', 3, '2024-12-06', '16:13:00', '17:13:00', 120000, 'Chờ duyệt');
+(39, 9, 'KH Thật ', 3, '2024-12-06', '16:13:00', '17:13:00', 120000, 'Chờ duyệt'),
+(49, 7, 'Nguyễn Xuân Bách', 4, '2025-05-12', '06:59:00', '18:59:00', 1219667, 'Chờ duyệt'),
+(50, 7, 'Nguyễn Xuân Bách', 4, '2024-12-28', '08:39:00', '16:39:00', 773000, 'Chờ duyệt');
 
 -- --------------------------------------------------------
 
@@ -330,14 +306,6 @@ ALTER TABLE `coso`
   ADD KEY `MaChuSan` (`MaChuSan`);
 
 --
--- Chỉ mục cho bảng `dondatsan`
---
-ALTER TABLE `dondatsan`
-  ADD PRIMARY KEY (`MaDonDatSan`),
-  ADD KEY `MaKhachHang` (`MaKhachHang`),
-  ADD KEY `MaNhanVien` (`MaNhanVien`);
-
---
 -- Chỉ mục cho bảng `dondatsan1`
 --
 ALTER TABLE `dondatsan1`
@@ -403,16 +371,10 @@ ALTER TABLE `coso`
   MODIFY `MaCoSo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT cho bảng `dondatsan`
---
-ALTER TABLE `dondatsan`
-  MODIFY `MaDonDatSan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT cho bảng `dondatsan1`
 --
 ALTER TABLE `dondatsan1`
-  MODIFY `MaDonDatSan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `MaDonDatSan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT cho bảng `giathue`
@@ -452,7 +414,6 @@ ALTER TABLE `sanbong`
 -- Các ràng buộc cho bảng `chitietdondatsan`
 --
 ALTER TABLE `chitietdondatsan`
-  ADD CONSTRAINT `chitietdondatsan_ibfk_1` FOREIGN KEY (`MaDonDatSan`) REFERENCES `dondatsan` (`MaDonDatSan`),
   ADD CONSTRAINT `chitietdondatsan_ibfk_2` FOREIGN KEY (`MaSanBong`) REFERENCES `sanbong` (`MaSanBong`);
 
 --
@@ -460,13 +421,6 @@ ALTER TABLE `chitietdondatsan`
 --
 ALTER TABLE `coso`
   ADD CONSTRAINT `coso_ibfk_1` FOREIGN KEY (`MaChuSan`) REFERENCES `chusan` (`MaChuSan`);
-
---
--- Các ràng buộc cho bảng `dondatsan`
---
-ALTER TABLE `dondatsan`
-  ADD CONSTRAINT `dondatsan_ibfk_1` FOREIGN KEY (`MaKhachHang`) REFERENCES `khachhang` (`MaKhachHang`),
-  ADD CONSTRAINT `dondatsan_ibfk_2` FOREIGN KEY (`MaNhanVien`) REFERENCES `nhanvien` (`MaNhanVien`);
 
 --
 -- Các ràng buộc cho bảng `dondatsan1`

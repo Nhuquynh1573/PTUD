@@ -40,6 +40,7 @@ if ($kq) {
         $maKhachHang = $r['MaKhachHang'];
         // Sửa và Xóa
         echo "<td>
+                <a href='?action=updateKhachHang&MaKhachHang=$maKhachHang&MaChuSan=$maChuSan' class='edit-button'>Sửa</a>
                 <a href='?action=deleteKhachHang&MaKhachHang=$maKhachHang' class='delete-button' onclick='return confirm(\"Bạn chắc chắn muốn xóa khách hàng này?\")'>Xóa</a>
               </td>";
         echo "</tr>";

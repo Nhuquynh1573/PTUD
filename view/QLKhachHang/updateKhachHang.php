@@ -1,34 +1,48 @@
-<?php 
-    ob_start();
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
-    include_once("Controller/cChuSan.php");
-    $p = new ControllerChuSan();
-    $maNV = $_REQUEST['id'];
-    $nv = $p -> get01NhanVien($maNV);
-    if($nv){
-        while($r = mysqli_fetch_assoc($nv)){
-            $tenNV = $r['TenNhanVien'];
-            $email = $r['Email'];
-            $sdt = $r['SDT'];
-            $diachi = $r['DiaChi'];
-            $sex = $r['GioiTinh'];
-            $pass = $r['MatKhau'];
-            $machusan = $r['MaChuSan'];
+<?php
+include_once('controller/cKhachHang.php');
+$pkh = new cKhachHang();
+
+// Kiểm tra mã sân bóng đã có trong URL hay chưa
+if (isset($_GET['MaKhachHang'])) {
+    $maKhachHang = $_GET['MaKhachHang'];
+ //   $maChuSan = $_GET['MaChuSan'];
+
+    // Lấy thông tin sân bóng từ DB
+    $KhachHang = $pkh->GetKhachHangByMaKhachHang($maKhachHang);
+    if ($KhachHang) {
+        $KhachHangData = mysqli_fetch_assoc($KhachHang);
+        if ($KhachHangData) {
+            $tenKhachHang = $KhachHangData['TenKhachHang'] ?? '';
+            $diachi = $KhachHangData['DiaChi'] ?? '';
+            $SDT = $KhachHangData['SDT'] ?? '';
+            $email = $KhachHangData['Email'] ?? '';
+            $gioitinh = $KhachHangData['GioiTinh'] ?? '';
+            $matkhau = $KhachHangData['MatKhau'] ?? '';
+        } else {
+            echo "<script>alert('Không tìm thấy dữ liệu cơ sở!');</script>";
+            header("refresh:0; url='admin.php?khachang'");
+            exit();
         }
-    }else{
-        echo "<script>alert('Nhân Viên Không Tồn Tại !!!')</script>";
-        header("refresh:0; url='admin.php'");
+    } else {
+        echo "<script>alert('Khách hàng không tồn tại!');</script>";
+        header("refresh:0; url='admin.php?khachang'");
+        exit();
     }
+} else {
+    echo "<script>alert('Thông tin không hợp lệ!');</script>";
+    header("refresh:0; url='admin.php'");
+    exit();
+}
 ?>
-<h2 align="center">Cập nhật nhân viên</h2>
-<form action="#" method="post" enctype="multipart/form-data" class="form-container">
+
+<h2 align="center">Cập Nhật Khách Hàng</h2>
+<form action="" method="POST" enctype="multipart/form-data" class="form-container">
     <div class="form-group">
-        <label for="TenNV">Tên Nhân Viên</label>
-        <input type="text" id="TenNV" name="TenNV" required value="<?php if(isset($tenNV)) echo $tenNV; ?>">
+        <label for="TenkhachHang">Tên Khách Hàng</label>
+        <input type="text" id="TenKhachHang" name="TenKhachHang" required placeholder="VD: Nguyễn Văn An" value="<?php echo htmlspecialchars($tenKhachHang, ENT_QUOTES); ?>">
         <small class="error-message" style="color: red; display: none;">Tên không hợp lệ!</small>
     </div>
+
     <div class="form-group">
         <label for="Email">Email</label>
         <input type="email" id="Email" name="Email" required value="<?php if(isset($email)) echo $email; ?>">
@@ -36,9 +50,10 @@
     </div>
     <div class="form-group">
         <label for="SDT">Số Điện Thoại</label>
-        <input type="text" id="SDT" name="SDT" required value="<?php if(isset($sdt)) echo $sdt; ?>">
+        <input type="text" id="SDT" name="SDT" required value="<?php if(isset($SDT)) echo $SDT; ?>">
         <small class="error-message" style="color: red; display: none;">Số điện thoại không hợp lệ!</small>
     </div>
+    
     <div class="form-group">
         <label for="DiaChi">Địa Chỉ</label>
         <input id="DiaChi" name="DiaChi" required value="<?php if(isset($diachi)) echo $diachi; ?>"></input>
@@ -47,38 +62,29 @@
     <div class="form-group">
         <label for="GioiTinh">Giới Tính</label>
         <select id="GioiTinh" name="GioiTinh" required>
-            <option value="1" <?php echo (isset($sex) && $sex == 1) ? "selected" : ""; ?>>Nam</option>
-            <option value="0" <?php echo (isset($sex) && $sex == 0) ? "selected" : ""; ?>>Nữ</option>
+            <option value="1" <?php echo (isset($gioitinh) && $gioitinh == 1) ? "selected" : ""; ?>>Nam</option>
+            <option value="0" <?php echo (isset($gioitinh) && $gioitinh == 0) ? "selected" : ""; ?>>Nữ</option>
         </select>
     </div>
 
     <div class="form-group" style="position: relative;">
         <label for="MatKhau">Mật Khẩu</label>
-        <input type="password" id="MatKhau" name="MatKhau" required value="<?php if(isset($pass)) echo $pass; ?>" style="padding-right: 40px;">
+        <input type="password" id="MatKhau" name="MatKhau" required value="<?php if(isset($matkhau)) echo $matkhau; ?>" style="padding-right: 40px;">
             <!-- Biểu tượng con mắt -->
             <span id="togglePassword" style="position: absolute; right: 10px; top: 40px; cursor: pointer;">
                 👁️
             </span>
     </div>
 
+    
+
+    
     <div class="form-group" style="display: flex; justify-content: space-between;">
-        <input type="submit" name="btncapnhat" value="Cập nhật">
+        <input type="submit" name="btnUpdateKhachHang" value="Cập Nhật Khách Hàng">
         <input type="reset" value="Hủy" onclick="history.back();">
     </div>
 </form>
 
-<script>
-    const togglePassword = document.getElementById("togglePassword");
-    const passwordField = document.getElementById("MatKhau");
-
-    togglePassword.addEventListener("click", function () {
-        // Kiểm tra trạng thái của trường mật khẩu
-        const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
-        passwordField.setAttribute("type", type);
-        // Thay đổi biểu tượng
-        this.textContent = type === "password" ? "👁️" : "🙈";
-    });
-</script>
 
 <script>
     // Regex cho từng loại kiểm tra
@@ -103,7 +109,7 @@
     }
 
     // Gán sự kiện blur cho từng ô nhập liệu
-    document.getElementById("TenNV").addEventListener("blur", function () {
+    document.getElementById("TenKhachHang").addEventListener("blur", function () {
         validateField(this, nameRegex, "Tên không hợp lệ! Tên phải viết hoa chữ cái đầu và không chứa ký tự đặc biệt.");
     });
 
@@ -121,17 +127,33 @@
 </script>
 
 <?php
-    if (isset($_REQUEST['btncapnhat'])) {
-        $kq = $p->updateNhanVien($maNV, $_REQUEST['TenNV'], $_REQUEST['Email'], $_REQUEST['SDT'], $_REQUEST['DiaChi'], $_REQUEST['GioiTinh'], $_REQUEST['MatKhau'], $machusan);
-        if ($kq) {
-            echo "<script>alert('Cập nhật Nhân Viên thành công')</script>";
-            header("refresh:0; url='admin.php?nhanvien'");
-            ob_end_flush();
-        } else {
-            echo "<script>alert('Cập nhật Nhân Viên thất bại')</script>";
+
+        if (isset($_POST['btnUpdateKhachHang'])) {
+            $tenKhachHang = $_POST['TenKhachHang'] ?? '';
+            $email = $_POST['Email'] ?? '';
+            $sdt = $_POST['SDT'] ?? '';
+            $matKhau = $_POST['MatKhau'] ?? '';
+            $diaChi = $_POST['DiaChi'] ?? '';
+            $gioiTinh = $_POST['GioiTinh'] ?? '';
+
+            $matKhau = md5($matKhau);
+
+            // Gọi hàm cập nhật khách hàng từ model
+            $kq = $pkh->updateKhachHang($maKhachHang, $tenKhachHang, $email, $sdt, $matKhau, $diaChi, $gioiTinh);
+
+            if ($kq) {
+                echo "<script>alert('Cập nhật khách hàng thành công!');</script>";
+                echo "<script>window.location.href = 'admin.php?khachhang';</script>";
+
+                exit();
+            } else {
+                echo "<script>alert('Cập nhật khách hàng thất bại!');</script>";
+            }
         }
-    }
+
+
 ?>
+
 
 <style>
     body {
