@@ -1,0 +1,118 @@
+
+body {background-image: url('../img/pexels-photo-61135.jpeg');
+    background-size: cover; 
+    background-position: center; 
+    height: 100vh; 
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+/* Container bao quanh form */
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Nút đóng */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    width: 50px;
+}
+
+/* Căn chỉnh tiêu đề */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Các trường input và select */
+input[type="date"],
+input[type="time"],
+select,
+input[type="text"] {
+    width: 97%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #f9f9f9;
+}
+
+/* Định dạng cho button */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0062E6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hiệu ứng hover cho button */
+button:hover {
+    background-color: #004bb5;
+}
+
+/* Định dạng cho các label */
+label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: block;
+    color: #333;
+}
+
+/* Định dạng cho select multiple */
+select[multiple] {
+    height: 120px;
+    background-color: #f9f9f9;
+}
+
+/* Xử lý tổng tiền */
+#tongTien {
+    font-weight: bold;
+    color: #ff5722;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* Đảm bảo form hiển thị đẹp trên các thiết bị nhỏ */
+@media (max-width: 480px) {
+    .container {
+        width: 90%;
+    }
+    h2, h3 {
+        font-size: 18px;
+    }
+    input, select, button {
+        font-size: 14px;
+    }
+}

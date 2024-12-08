@@ -1,0 +1,105 @@
+.table-container {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 1000px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.order-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    padding: 12px 20px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.order-table td {
+    padding: 12px 20px;
+    background-color: #f9f9f9;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.order-table tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+.order-table tr:hover {
+    background-color: #e1f1e1;
+    cursor: pointer;
+}
+
+.order-table tr.detail-row td {
+    background-color: #f2f8f7;
+    color: #666;
+}
+
+.back-button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #45a049;
+}
+
+
+.order-table tr.detail-row td strong {
+    color: #4CAF50;
+}
+
+@media screen and (max-width: 768px) {
+    .order-table {
+        width: 100%;
+        table-layout: auto;
+    }
+
+    .order-table th, .order-table td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .order-table td {
+        padding-left: 40%;
+        position: relative;
+    }
+
+    .order-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: bold;
+        color: #777;
+    }
+}
