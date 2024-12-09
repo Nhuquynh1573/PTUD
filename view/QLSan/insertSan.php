@@ -53,8 +53,11 @@
         <textarea id="MoTaSan" name="MoTaSan" placeholder="Mô tả sân (ví dụ: có đèn chiếu sáng, phòng thay đồ...)"></textarea>
     </div>
     <div class="form-group">
-        <label for="ThoiGianHoatDong">Thời Gian Hoạt Động</label>
-        <input type="text" id="ThoiGianHoatDong" name="ThoiGianHoatDong" placeholder="Ví dụ: 6:00 AM - 10:00 PM" required>
+    <label for="GioMoCua">Giờ mở cửa:</label>
+        <input type="time" id="GioBatDau" name="GioMoCua"  required>
+
+        <label for="GioKetThuc">Giờ đóng cửa:</label>
+        <input type="time" id="GioDongCua" name="GioDongCua"  required>
         <small class="error-message" style="color: red; display: none;">Thời gian không hợp lệ!</small>
     </div>
     <div class="form-group">
@@ -245,7 +248,11 @@ if (isset($_POST['btnThemSan'])) {
     $tenSanBong = $_POST['TenSan'];
     $loaiSan = $_POST['LoaiSan'];
     $moTaSan = $_POST['MoTaSan'];
-    $thoiGianHoatDong = $_POST['ThoiGianHoatDong'];
+    $giomocua = $_POST['GioMoCua'];
+    $giodongcua = $_POST['GioDongCua'];
+    $thoiGianHoatDong = $giomocua.' - '.$giodongcua;
+  
+   
     $maNhanVien = $_POST['MaNhanVien'];
     $maCoSo = $_POST['MaCoSo'];
 

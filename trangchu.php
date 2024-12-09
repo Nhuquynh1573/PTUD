@@ -170,7 +170,7 @@ ob_start();
             <h3>NỘI DUNG</h3>
             <ul class="quick-menu">
                 <li class="item"><a href="index.php">Trang chủ</a></li>
-                <li class="item"><a href="dssan.php">Danh sách sân</a></li>
+                <li class="item"><a href="San.php">Danh sách sân</a></li>
                 <li class="item"><a href="#">Dịch vụ</a></li>
                 <li class="item"><a href="#">Liên hệ</a></li>
             </ul>

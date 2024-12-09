@@ -6,6 +6,10 @@ class cDonDatSan {
         $model = new mDonDatSan();
         return $model->GetALLDonDatSan(); // Lấy tất cả đơn đặt sân
     }
+    public function GetAllDonDatSanByMaChuSan($machusan) {
+        $model = new mDonDatSan();
+        return $model->GetALLDonDatSanByMaChuSan($machusan); // Lấy tất cả đơn đặt sân
+    }
 
     public function ThemDonDatSan($tenKH, $sdt, $ngayDat, $gioBatDau, $gioKetThuc, $tenSanBong) {
         $model = new mDonDatSan();

@@ -21,6 +21,7 @@ class ControllerUser {
                 case 'nhanvien':
                     $welcomeMessage = "Đăng nhập thành công. Chúc bạn một ngày làm việc tràn đầy năng lượng.";
                     $_SESSION["MaNhanVien"] = $user["MaNhanVien"];
+                    $_SESSION["MaChuSan"] = $user["MaChuSan"];
                     break;
                 case 'khachhang':
                     $welcomeMessage = "Chào mừng Quý Khách. Hãy tận hưởng những dịch vụ tốt nhất từ chúng tôi.";

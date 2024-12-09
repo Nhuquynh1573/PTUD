@@ -3,7 +3,8 @@
 ob_start();
 include_once("controller/cDonDatSan.php");
 $p = new cDonDatSan();
-$kq = $p->GetALLDonDatSan(); // Lấy tất cả đơn đặt sân
+$maChuSan = $_SESSION['MaChuSan'];
+$kq = $p->GetAllDonDatSanByMaChuSan($maChuSan); // Lấy tất cả đơn đặt sân
 ?>
 
 <div class="header-container">

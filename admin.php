@@ -103,7 +103,7 @@ article p {
                 <li class="item active"><a href="trangchu.php" id="trangchu">Trang Chủ</a></li>
                 <li class="item"><a href="San.php">Danh sách sân</a></li>
                 <li class="item"><a href="admin.php">Quản lý</a></li>
-                <li class="item"><a href="./view/timkiem.php">Tìm Kiếm</a></li>
+                <li class="item"><a href="timkiem.php">Tìm Kiếm</a></li>
             </ul>
         </nav>
         <div id="actions">
@@ -191,7 +191,7 @@ article p {
             <h3>NỘI DUNG</h3>
             <ul class="quick-menu">
                 <li class="item"><a href="index.php">Trang chủ</a></li>
-                <li class="item"><a href="dssan.php">Danh sách sân</a></li>
+                <li class="item"><a href="San.php">Danh sách sân</a></li>
                 <li class="item"><a href="#">Dịch vụ</a></li>
                 <li class="item"><a href="#">Liên hệ</a></li>
             </ul>

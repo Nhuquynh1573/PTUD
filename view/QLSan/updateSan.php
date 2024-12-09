@@ -16,7 +16,13 @@ if (isset($_GET['MaSanBong'])) {
             $loaiSan = $sanBongData['MaLoaiSan'];
             $giathue1 = $sanBongData['Gia'];
             $moTaSan = $sanBongData['MoTa'];
+            
             $thoiGianHoatDong = $sanBongData['ThoiGianHoatDong'];
+            echo $thoiGianHoatDong;
+            $parts = explode(" - ", $thoiGianHoatDong);
+            $giobatdau = date("H:i", strtotime($parts[0] ?? '')); // Chuyển 6:00 AM thành 06:00
+            $giokethuc = date("H:i", strtotime($parts[1] ?? '')); // Chuyển 6:00 PM thành 18:00
+
             $maNhanVien = $sanBongData['MaNhanVien'];
             $tenNV = $sanBongData['TenNhanVien'];
             $HinhAnh = $sanBongData['HinhAnh'];
@@ -73,9 +79,17 @@ if (isset($_GET['MaSanBong'])) {
     </div>
 
     <div class="form-group">
-        <label for="ThoiGianHoatDong">Thời Gian Hoạt Động</label>
-        <input type="text" id="ThoiGianHoatDong" name="ThoiGianHoatDong" required value="<?php echo htmlspecialchars($thoiGianHoatDong ?? ''); ?>">
+    <label for="GioMoCua">Giờ Mở Cửa</label>
+    <input type="time" id="GioMoCua" name="GioMoCua" 
+    value="<?php echo htmlspecialchars($giobatdau ?? '', ENT_QUOTES); ?>" required>
+    <label for="GioDongCua">Giờ Đóng Cửa</label>
+
+    <input type="time" id="GioDongCua" name="GioDongCua" 
+    value="<?php echo htmlspecialchars($giokethuc ?? '', ENT_QUOTES); ?>" required>
+
+
         <small class="error-message" style="color: red; display: none;">Thời gian không hợp lệ!</small>
+    </div>
     </div>
 
     <div class="form-group">
@@ -272,9 +286,11 @@ updatePrice();
 if (isset($_POST['btnCapNhatSan'])) {
     $tenSanBong = $_POST['TenSan'];
     $loaiSan = $_POST['LoaiSan'];
-  //  $giaSan = $_POST['GiaSan']; // Ensure this is used somewhere if necessary
+
     $moTaSan = $_POST['MoTaSan'];
-    $thoiGianHoatDong = $_POST['ThoiGianHoatDong'];
+    $giomocua = $_POST['GioMoCua'];
+    $giodongcua = $_POST['GioDongCua'];
+    $thoiGianHoatDong = $giomocua.' - '.$giodongcua;
     $maNhanVien = $_POST['MaNhanVien'];
     $maCoSo = $_POST['MaCoSo'];
    

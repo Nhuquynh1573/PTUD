@@ -18,6 +18,34 @@ class mDonDatSan {
 
         return $result; // Return the result
     }
+    public function GetALLDonDatSanByMaChuSan($machusan) {
+        $p = new mKetNoi();
+        $con = $p->moKetNoi();
+
+        if (!$con) {
+            return false;  // Return false if connection fails
+        }
+
+        $sql = "SELECT d.MaDonDatSan, d.MaKhachHang, d.TenKhachHang, d.MaSanBong, d.NgayDat, d.GioBatDau, d.GioKetThuc, d.TongTien, d.TrangThai,
+                    s.TenSanBong,
+                    s.MoTa AS MoTaSanBong,
+                    c.TenCoSo,
+                    c.DiaChi AS DiaChiCoSo
+                FROM 
+                    dondatsan1 d
+                JOIN 
+                    sanbong s ON d.MaSanBong = s.MaSanBong
+                JOIN 
+                    coso c ON s.MaCoSo = c.MaCoSo
+                WHERE 
+                    c.MaChuSan = $machusan;
+                "; 
+        $result = $con->query($sql); // Execute the query
+
+        $p->dongKetNoi($con); // Close the connection
+
+        return $result; // Return the result
+    }
 
     // Thêm đơn đặt sân
     public function ThemDonDatSan($tenKH, $sdt, $ngayDat, $gioBatDau, $gioKetThuc, $tenSanBong) {
