@@ -169,9 +169,18 @@ article p {
                 include_once("View/QLKhachHang/quanlykhachhang.php");         
             }elseif (isset($_REQUEST["action"]) && $_REQUEST["action"] === "updateKhachHang"){
                 include_once("View/QLKhachHang/updateKhachHang.php");
+            }elseif (isset($_REQUEST["printDon"])){
+                include_once("View/duyetdondatsan.php");          
+            }elseif (isset($_REQUEST["dondat"])){
+                include_once("View/dondat.php");         
+            }elseif (isset($_REQUEST["action"]) && $_REQUEST["action"] == "editDon"){
+                // echo  "asdss";
+                include_once("View/editdon.php");          
+            }else {
+            echo "<h2>Chào Mừng Đến Với Trang Admin</h2>";
             }
             ?>
-        </article>
+        </article>  
     </section>
 
     <!-- Footer Section -->

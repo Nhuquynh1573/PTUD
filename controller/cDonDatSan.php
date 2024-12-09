@@ -92,7 +92,15 @@ class cDonDatSan {
         $kq = $p->deletedatsan($maDonDatSan); // Gọi hàm deletedatsan trong model
         return $kq; // Trả về kết quả
     }
+
+
     
+
+
+    public function UpDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien) {
+        $model = new mDonDatSan();
+        return $model->SuaDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien);
+    }
     
     
 }

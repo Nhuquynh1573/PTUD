@@ -8,7 +8,10 @@ $maChuSan = $_SESSION['MaChuSan'];
 
 // Lấy danh sách khách hàng theo mã chủ sân
 $kq = $p->GetKhachHangByMaChuSan($maChuSan); 
+echo "<div class='header-container'>
+<h1>Quản lý Khách Hàng</h1>
 
+</div>";
 // Kiểm tra xem có dữ liệu hay không
 if ($kq) {
    

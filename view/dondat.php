@@ -1,9 +1,9 @@
 <?php
+
 ob_start();
 include_once("controller/cDonDatSan.php");
 $p = new cDonDatSan();
-$kq = $p->GetALLDonDatSan(); // Gọi phương thức GetALLDonDatSan từ controller
-
+$kq = $p->GetALLDonDatSan(); // Lấy tất cả đơn đặt sân
 ?>
 
 <div class="header-container">
@@ -11,6 +11,7 @@ $kq = $p->GetALLDonDatSan(); // Gọi phương thức GetALLDonDatSan từ contr
 </div>
 
 <?php
+// Hiển thị danh sách đơn đặt sân
 if ($kq && mysqli_num_rows($kq) > 0) {
     echo "<table>";
     echo "<tr>
@@ -27,22 +28,25 @@ if ($kq && mysqli_num_rows($kq) > 0) {
 
     while ($r = mysqli_fetch_assoc($kq)) {
         echo "<tr>";
-        echo "<td>" . $r["MaDonDatSan"] . "</td>";
-        echo "<td>" . $r["MaKhachHang"] . "</td>";
-        echo "<td>" . $r["TenKhachHang"] . "</td>";
-        echo "<td>" . $r["TenSanBong"] . "</td>";
-        echo "<td>" . $r["GioBatDau"] . "</td>";
-        echo "<td>" . $r["GioKetThuc"] . "</td>";
-        echo "<td>" . $r["TongTien"] . "</td>";
-        echo "<td>" . $r["TrangThai"] . "</td>";
+        echo "<td>".$r["MaDonDatSan"]."</td>";
+        echo "<td>".$r["MaKhachHang"]."</td>";
+        echo "<td>".$r["TenKhachHang"]."</td>";
+        echo "<td>".$r["TenSanBong"]."</td>";
+        echo "<td>".$r["GioBatDau"]."</td>";
+        echo "<td>".$r["GioKetThuc"]."</td>";
+        echo "<td>".$r["TongTien"]."</td>";
+        echo "<td>".$r["TrangThai"]."</td>";
         echo "<td>
-        <a class='edit-button' href='?editDon=" . $r["MaDonDatSan"] . "'>Sửa</a>
-        <form method='post' style='display: inline-block;' onsubmit='return confirmDelete()'>
-            <input type='hidden' name='id' value='" . $r["MaDonDatSan"] . "'>
-            <button type='submit' name='delete' class='delete-button'>Xóa</button>
-        </form>";
+            <form action='#' method = 'post'>
+                <a class='edit-button' href='?action=editDon&id=" . $r["MaDonDatSan"] . "'>Sửa</a>
+            </form>
+            
+            <form method='post' style='display: inline-block;' class='delete-form'>
+                <input type='hidden' name='id' value='".$r["MaDonDatSan"]."'>
+                <button type='submit' name='delete' class='delete-button'>Hủy</button>
+            </form>";
         if ($r["TrangThai"] != "Đã đặt") {
-            echo "<a class='indon-button' href='?printDon=" . $r["MaDonDatSan"] . "'>Duyệt</a>";
+            echo "<a class='indon-button' href='?printDon=".$r["MaDonDatSan"]."'>Duyệt</a>";
         }
         echo "</td></tr>";
     }
@@ -56,15 +60,17 @@ if (isset($_POST["delete"])) {
     $maDonDatSan = $_POST["id"]; // Lấy giá trị id từ form
     $kq = $p->deletedatsan($maDonDatSan); // Gọi hàm delete từ controller
     if ($kq) {
-        echo "<p style='color: green;'>Đơn đặt sân đã được xóa thành công!</p>";
+        echo "<script>alert('Đơn đặt sân đã được xóa thành công!');</script>";
         header("Location: ?dondat");
-        ob_end_flush();
         exit();
     } else {
-        echo "<p style='color: red;'>Không thể xóa đơn đặt sân. Vui lòng thử lại!</p>";
+        echo "<script>alert('Không thể xóa đơn đặt sân. Vui lòng thử lại!');</script>";
     }
 }
 ?>
+
+
+
 
 <style>
     .header-container {
@@ -136,19 +142,30 @@ if (isset($_POST["delete"])) {
 </style>
 
 <script>
-    function confirmDelete() {
-        return window.confirm("Bạn có chắc chắn muốn xóa đơn đặt sân này không?");
-    }
-
-    // Kiểm tra trước khi gửi form
-    document.querySelectorAll('form').forEach(form => {
+   document.addEventListener('DOMContentLoaded', function () {
+    // Xử lý confirm delete
+    const deleteForms = document.querySelectorAll('.delete-form');
+    deleteForms.forEach(function (form) {
         form.addEventListener('submit', function (e) {
-            const gioBatDau = document.querySelector('[name="txtGioBatDau"]');
-            const gioKetThuc = document.querySelector('[name="txtGioKetThuc"]');
-            if (gioBatDau && gioKetThuc && gioBatDau.value >= gioKetThuc.value) {
-                alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc!');
-                e.preventDefault(); // Ngăn gửi form
+            if (!window.confirm('Bạn có chắc chắn muốn xóa đơn đặt sân này không?')) {
+                e.preventDefault();
             }
         });
     });
+
+    // Kiểm tra giờ bắt đầu và giờ kết thúc
+    const bookingForm = document.querySelector('form');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function (e) {
+            const gioBatDau = document.querySelector('[name="gioBatDau"]').value;
+            const gioKetThuc = document.querySelector('[name="gioKetThuc"]').value;
+
+            if (gioBatDau && gioKetThuc && gioBatDau >= gioKetThuc) {
+                alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc!');
+                e.preventDefault();
+            }
+        });
+    }
+});
+
 </script>

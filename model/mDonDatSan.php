@@ -222,6 +222,28 @@ class mDonDatSan {
         $p->dongKetNoi($con); // Đóng kết nối
         return $kq; // Trả về kết quả (true/false)
     }
+
+
+    public function SuaDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien) {
+        $p = new mKetNoi();
+        $conn = $p->moKetNoi();
+        $query = "UPDATE dondatsan1 
+                  SET MaKhachHang = '$tenKH', 
+                      NgayDat = '$ngayDat', 
+                      GioBatDau = '$gioBatDau', 
+                      GioKetThuc = '$gioKetThuc', 
+                      TrangThai = '$trangThai', 
+                      TongTien = '$tongTien' 
+                  WHERE MaDonDatSan ='$maDonDatSan'";
+    $stmt = $conn->query($query);
+    if($stmt){
+        return $stmt;
+        // $stmt->bind_param("ssssssi", $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien, $maDonDatSan);
+        // return $stmt->execute();
+    } else{
+        return false;
+    }
+    }
     
     
     
