@@ -223,6 +223,38 @@ class mDonDatSan {
         return $kq; // Trả về kết quả (true/false)
     }
 
+    
+    public function GetDonDatSanById($maDonDatSan) {
+        $p = new mKetNoi();
+        $conn = $p->moKetNoi();
+        $query = "SELECT * FROM DonDatSan1 dds join KhachHang kh on dds.MaKhachHang = kh.MaKhachHang WHERE MaDonDatSan = ?";
+        
+        if ($stmt = $conn->prepare($query)) {
+            $stmt->bind_param("i", $maDonDatSan);
+            $stmt->execute();
+            return $stmt->get_result(); 
+        }
+        return false;
+    }
+
+    // Cập nhật đơn đặt sân
+    // public function SuaDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai) {
+    //     $p = new mKetNoi();
+    //     $conn = $p->moKetNoi();
+    //     $query = "UPDATE DonDatSan1 SET 
+    //               TenKhachHang = ?, 
+    //               NgayDat = ?, 
+    //               GioBatDau = ?, 
+    //               GioKetThuc = ?,
+    //               TrangThai = ? 
+    //               WHERE MaDonDatSan = ?";
+
+    //     if ($stmt = $conn->prepare($query)) {
+    //         $stmt->bind_param("sssssi", $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $maDonDatSan);
+    //         return $stmt->execute(); 
+    //     }
+    //     return false;
+    // }
 
     public function SuaDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien) {
         $p = new mKetNoi();
@@ -243,9 +275,11 @@ class mDonDatSan {
     } else{
         return false;
     }
-    }
-    
-    
     
 }
+    
+}
+   
+        
+    
 ?>

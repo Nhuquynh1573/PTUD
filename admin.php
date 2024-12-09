@@ -147,10 +147,6 @@ article p {
                 include_once("View/QLNhanVien/deleteNhanVien.php");          
             }elseif (isset($_REQUEST["action"]) && $_REQUEST["action"] === "updateNV"){
                 include_once("View/QLNhanVien/updateNhanVien.php");          
-            }elseif (isset($_REQUEST["printDon"])){
-                include_once("View/duyetdondatsan.php");          
-            }elseif (isset($_REQUEST["dondat"])){
-                include_once("View/dondat.php");          
             }elseif (isset($_REQUEST["action"]) && $_REQUEST["action"] === "addSan"){
                 include_once("View/QLSan/insertSan.php");          
             }elseif (isset($_REQUEST["action"]) && $_REQUEST["action"] === "updateSanBong"){
@@ -174,7 +170,6 @@ article p {
             }elseif (isset($_REQUEST["dondat"])){
                 include_once("View/dondat.php");         
             }elseif (isset($_REQUEST["action"]) && $_REQUEST["action"] == "editDon"){
-                // echo  "asdss";
                 include_once("View/editdon.php");          
             }else {
             echo "<h2>Chào Mừng Đến Với Trang Admin</h2>";

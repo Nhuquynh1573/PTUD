@@ -127,7 +127,8 @@ a {
     text-decoration: none;
 }
 
-a:hover {text-decoration: underline;
+a:hover {
+    text-decoration: underline;
 }
 
 /* Thông báo lỗi hoặc thành công */
@@ -200,53 +201,54 @@ p {
     function calculatePrice() {
         // Lấy giá trị từ form
         var maSan = document.getElementById("maSan").value; // Mã sân
-        var gioBatDau = document.getElementById("gioBatDau").value; // Giờ bắt đầuvar gioKetThuc = document.getElementById("gioKetThuc").value; // Giờ kết thúc
+        var gioBatDau = document.getElementById("gioBatDau").value; // Giờ bắt đầu
+        var gioKetThuc = document.getElementById("gioKetThuc").value; // Giờ kết thúc
 
-if (!maSan || !gioBatDau || !gioKetThuc) {
-    alert("Vui lòng chọn mã sân và nhập giờ đầy đủ!");
-    return;
-}
+        if (!maSan || !gioBatDau || !gioKetThuc) {
+            alert("Vui lòng chọn mã sân và nhập giờ đầy đủ!");
+            return;
+        }
 
-var thoiGianBatDau = new Date("1970-01-01T" + gioBatDau + ":00");
-var thoiGianKetThuc = new Date("1970-01-01T" + gioKetThuc + ":00");
+        var thoiGianBatDau = new Date("1970-01-01T" + gioBatDau + ":00");
+        var thoiGianKetThuc = new Date("1970-01-01T" + gioKetThuc + ":00");
 
-if (thoiGianBatDau >= thoiGianKetThuc) {
-    alert("Giờ bắt đầu phải nhỏ hơn giờ kết thúc!");
-    return;
-}
+        if (thoiGianBatDau >= thoiGianKetThuc) {
+            alert("Giờ bắt đầu phải nhỏ hơn giờ kết thúc!");
+            return;
+        }
 
-var tongTien = 0;
+        var tongTien = 0;
 
-// Tính tiền dựa trên khung giờ
-while (thoiGianBatDau < thoiGianKetThuc) {
-    var gioHienTai = thoiGianBatDau.getHours();
+        // Tính tiền dựa trên khung giờ
+        while (thoiGianBatDau < thoiGianKetThuc) {
+            var gioHienTai = thoiGianBatDau.getHours();
 
-    // Kiểm tra khung giờ sáng
-    if (gioHienTai >= 6 && gioHienTai < 12) {
-        tongTien += bangGia[maSan]['sang'] / 60; // Giá mỗi phút
+            // Kiểm tra khung giờ sáng
+            if (gioHienTai >= 6 && gioHienTai < 12) {
+                tongTien += bangGia[maSan]['sang'] / 60; // Giá mỗi phút
+            }
+            // Kiểm tra khung giờ chiều
+            else if (gioHienTai >= 13 && gioHienTai < 23) {
+                tongTien += bangGia[maSan]['chieu'] / 60;
+            }
+            // Tăng thêm 1 phút
+            thoiGianBatDau.setMinutes(thoiGianBatDau.getMinutes() + 1);
+        }
+
+        // Hiển thị tổng tiền (nếu người dùng thay đổi giờ hoặc sân)
+        document.getElementById("tongTien").value = Math.round(tongTien) + " VNĐ";
     }
-    // Kiểm tra khung giờ chiều
-    else if (gioHienTai >= 13 && gioHienTai < 23) {
-        tongTien += bangGia[maSan]['chieu'] / 60;
-    }
-    // Tăng thêm 1 phút
-    thoiGianBatDau.setMinutes(thoiGianBatDau.getMinutes() + 1);
-}
 
-// Hiển thị tổng tiền (nếu người dùng thay đổi giờ hoặc sân)
-document.getElementById("tongTien").value = Math.round(tongTien) + " VNĐ";
-}
+    // Gọi hàm tính giá khi thay đổi giờ hoặc sân
+    document.getElementById("gioBatDau").addEventListener("change", calculatePrice);
+    document.getElementById("gioKetThuc").addEventListener("change", calculatePrice);
+    document.getElementById("maSan").addEventListener("change", calculatePrice);
 
-// Gọi hàm tính giá khi thay đổi giờ hoặc sân
-document.getElementById("gioBatDau").addEventListener("change", calculatePrice);
-document.getElementById("gioKetThuc").addEventListener("change", calculatePrice);
-document.getElementById("maSan").addEventListener("change", calculatePrice);
-
-// Giữ nguyên giá tiền ban đầu khi tải trang
-window.onload = function () {
-var tongTienBanDau = document.getElementById("tongTienBanDau").value;
-document.getElementById("tongTien").value = tongTienBanDau;
-};
+    // Giữ nguyên giá tiền ban đầu khi tải trang
+    window.onload = function () {
+        var tongTienBanDau = document.getElementById("tongTienBanDau").value;
+        document.getElementById("tongTien").value = tongTienBanDau;
+    };
 </script>
 </body>
 </html>

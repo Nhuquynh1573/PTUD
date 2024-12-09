@@ -92,16 +92,29 @@ class cDonDatSan {
         $kq = $p->deletedatsan($maDonDatSan); // Gọi hàm deletedatsan trong model
         return $kq; // Trả về kết quả
     }
-
-
     
-
-
-    public function UpDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien) {
-        $model = new mDonDatSan();
-        return $model->SuaDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien);
+    // Sửa lại tên phương thức từ GetDonById thành GetDonDatSanById
+    public function GetDonDatSanById($maDonDatSan) {
+        $model = new mDonDatSan(); 
+        return $model->GetDonDatSanById($maDonDatSan); // Gọi đúng phương thức của lớp model
     }
+
+    // Cập nhật thông tin đơn đặt sân
+   
+// public function UpDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai) {
+//     // Kết nối tới model
+//     $model = new mDonDatSan();
+
+//     // Gọi hàm cập nhật trong model và truyền thêm tổng tiền
+//     return $model->SuaDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai);
+// }
+public function UpDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien) {
+    $model = new mDonDatSan();
+    return $model->SuaDonDatSan($maDonDatSan, $tenKH, $ngayDat, $gioBatDau, $gioKetThuc, $trangThai, $tongTien);
+}
+
     
+
     
 }
 ?>
